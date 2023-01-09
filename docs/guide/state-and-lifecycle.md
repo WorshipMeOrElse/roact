@@ -91,7 +91,7 @@ function Clock:didMount()
 	self.running = true
 
 	-- We don't want to block the main thread, so we spawn a new one!
-	spawn(function()
+	task.spawn(function()
 		while self.running do
 			-- Because we depend on the previous state, we use the function
 			-- variant of setState. This will matter more when Roact gets
@@ -102,7 +102,7 @@ function Clock:didMount()
 				}
 			end)
 
-			wait(1)
+			task.wait(1)
 		end
 	end)
 end
@@ -119,6 +119,6 @@ local PlayerGui = Players.LocalPlayer.PlayerGui
 local handle = Roact.mount(Roact.createElement(Clock), PlayerGui, "Clock UI")
 
 -- Later, we can destroy our UI and disconnect everything correctly.
-wait(10)
+task.wait(10)
 Roact.unmount(handle)
 ```
